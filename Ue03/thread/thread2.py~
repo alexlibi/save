@@ -1,0 +1,28 @@
+import string,time
+import threading
+wl=[x for x in range(10,1,-1)]
+
+class worker(threading.Thread):
+  def __init__(self,l,c):
+     threading.Thread.__init__(self)
+     if l: self.time=wl.pop();tl.append(time.time())
+     else: self.time=-1
+  def run(self):
+      if self.time<0:
+         print "%s: nothing to do" % self.getName()
+      print "%s: Start (%f) %f" % (self.getName(),self.time,time.time())
+      time.sleep(self.time)
+      print "%s: End %s" % (self.getName(),time.ctime())
+# -------------------------------------
+
+
+c=10
+tl=[]
+while wl:
+  w=worker(wl,c)
+  #time.sleep(c*0.00001)
+  w.start()
+  c-=1
+
+print tl
+print "%d remaining threads" % (threading.activeCount()-1)

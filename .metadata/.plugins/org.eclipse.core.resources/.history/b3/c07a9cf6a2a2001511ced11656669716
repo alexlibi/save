@@ -1,0 +1,37 @@
+import math
+import numpy
+import sys
+import matplotlib.pyplot as plt
+
+name=sys.argv[1]
+
+f=open(name, "r")
+data=f.read()
+f.close()
+data=data.strip().split()
+
+tmp=[]
+
+for i in data:
+    tmp.append(float(i))
+
+data=tmp
+
+
+
+erg=numpy.fft.fft(data)
+freq=[]
+for i in range(1,len(erg.real)):
+    freq.append(i/float(22050))
+print erg
+
+
+#spektrum=[]
+
+spektrum=numpy.square(numpy.absolute(erg[1:]))
+
+#plt.plot(freq,erg.real,freq,erg.imag)
+plt.plot(freq,spektrum)
+
+plt.show()
+

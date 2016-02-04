@@ -1,0 +1,12 @@
+total 856
+drwxr-xr-x+  8 save00 save   4096 Nov  4 09:11 .
+drwxr-xr-x  55 save00 save   4096 Nov  4 08:56 ..
+-rw-rw-r--   1 save00 save 103334 Nov  3 17:39 Angaben03.pdf
+drwx------   7 save00 save   4096 Nov  2 12:47 factor
+-rw-r--r--   1 save00 save      0 Nov  4 09:11 ls.dat
+drwxr-xr-x   2 save00 save   4096 Nov  3 18:00 mr
+drwxr-xr-x   2 save00 save   4096 Nov  4 08:48 pipe
+drwxr-xr-x   2 save00 save   4096 Nov  2 13:58 process
+-rwx------   1 save00 save 733966 Nov  2 12:47 sae.pdf
+drwxr-xr-x   2 save00 save   4096 Nov  2 13:16 signal
+drwxr-xr-x   2 save00 save   4096 Nov  2 13:33 thread

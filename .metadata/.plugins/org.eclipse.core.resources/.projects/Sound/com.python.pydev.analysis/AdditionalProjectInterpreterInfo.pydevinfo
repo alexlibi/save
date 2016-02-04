@@ -1,0 +1,65 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/alexander/save/.metadata/.plugins/org.eclipse.core.resources/.projects/Sound/com.python.pydev.analysis/v2_indexcache
+record|1449703785000000000|/home/alexander/save/Sound/record.py
+sound|1450212706000000000|/home/alexander/save/Sound/sound.py
+make_sound|1450210222000000000|/home/alexander/save/Sound/make_sound.py
+sound2|1450130314000000000|/home/alexander/save/Sound/sound2.py
+analysis|1450125811000000000|/home/alexander/save/Sound/analysis.py
+-- END DISKCACHE
+-- START DICTIONARY
+11
+10=Record.__init__
+2=record
+8=Play
+11=Play.__init__
+7=Record
+5=make_sound
+3=sound
+9=analysis.__init__
+6=play
+4=analysis
+1=sound2
+-- END DICTIONARY
+-- START TREE 1
+17
+ana|1|analysis!9@
+chu|1|CHUNK_SIZE!19@
+cre|1|create_sound!26@
+dat|3|data!19@data2!19@data!35@
+f|2|f!35@f!19@
+ffd|1|ffdata!35@
+for|1|FORMATE!19@
+mak|10|make_triangle!10@make_square!10@make_square!42@make_triangle!42@make_ramp!10@make_sin!42@make_noise!42@make_ramp!42@make_noise!10@make_sin!10@
+nam|1|name!35@
+opt|1|opt!19@
+out|1|out_filename!19@
+p|1|p!19@
+pla|3|play!9@play_sound!42@Play!25@
+rat|1|RATE!19@
+rec|3|Record!25@record!9@RECORD_SECONDS!19@
+str|1|stream!19@
+tmp|1|tmp!35@
+-- END TREE
+-- START TREE 2
+19
+__i|5|__init__!4&10@__init__!2&10@__init__!6&10@__init__!7&26@__init__!8&26@
+amp|1|ampl!7&27@
+dat|2|data!7&27@data!9&11@
+dec|1|decoded!7&27@
+df|1|df!7&27@
+f|1|f!7&27@
+ffd|1|ffdata!7&27@
+fre|1|freq!7&27@
+opt|1|opt!7&27@
+ply|2|ply!7&27@Ply!7&27@
+rat|3|rate!7&27@rate!10&27@rate!11&27@
+rec|3|RECORD_SECONDS!10&27@rec!7&27@Rec!7&27@
+run|5|run!4&10@run!2&10@run!6&10@run!7&26@run!8&26@
+sou|1|sound!7&27@
+spe|1|spec!7&27@
+tmp|1|tmp!7&27@
+tr|1|tr!7&27@
+typ|1|type_d!7&27@
+wav|2|wav!7&27@wav!11&27@
+-- END TREE

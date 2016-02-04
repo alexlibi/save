@@ -1,0 +1,152 @@
+#! /usr/bin/python
+
+import copy
+
+def Print_sudoku(sudoku):
+    for x in xrange(9):
+        for y in xrange(9):
+            if isinstance(sudoku[x][y], list):
+                if len(sudoku[x][y])!= 1:
+                    print "sudoku nicht geloest"
+                    return 1
+                sudoku[x][y] = str(sudoku[x][y][0]) + '*'
+            print sudoku[x][y], "\t",
+        print 2*"\n"
+    return 0
+
+#uebergeben wird ein sudoku in der form: '47509...'. Null steht fuer nicht ausgefuellte felder
+#erzeugt eine geschachtelte liste der form: [['4', '7', '5', [1, 2, 3, 4, 5, 6, 7, 8, 9], '9', ...], [...], [...]]
+#die nuller werden durch eine turn Liste von 1 bis 9 ersetzt, da vor loesung des sudoku jede zahl passen koennte
+def Read_sudoku(sudoku_angabe):
+    
+    #zuerst wird eine liste mit 9 eintraegen erzeugt    
+    sudoku_liste = [0 for x in xrange(9)]
+    
+    #diese 9 eintraege werden mit den einzelnen zeilen des sudokus (1 string mit 9 zeichen pro zeile) gefuellt
+    for x in xrange(9):
+        sudoku_liste[x] = sudoku_angabe[x * 9:(x+1) *9]
+    
+    #jetzt wird die eigentliche liste fuer das sudoku initialisiert, welche dann auch ausgegeben wird 
+    sudoku = [[[0 for x in xrange(9)]for y in xrange(9)]for z in xrange(9)]
+
+    #Ziffern ungleich Null werden einfach uebernommen jedoch wird aus dem Strin mit 9 ziffern eine liste mit 9 elementen
+    #zaehler setzen
+    for x in xrange(9):
+        for y in xrange(9):
+            #liste schreiben fuer ziffern ungleich null
+            if sudoku_liste[x][y] != "0":
+                sudoku[x][y] = sudoku_liste[x][y]
+            
+            #ist eine ziffer aber doch 0 wird sie durch eine liste mit den eintraegen von 1 bis 9 ersetzt
+            else:
+                sudoku[x][y] = range(1,10)
+                
+    return sudoku
+
+def Block_streichen(sudoku):
+       
+    for m in xrange(3):
+        for n in xrange(3):
+            zu_streichen = []            
+            for x in xrange(3*m, 3*(m+1)):
+                for y in xrange(3*n, 3*(n+1)):
+
+                    if len(sudoku[x][y]) == 1:
+                        zu_streichen.append(sudoku[x][y])
+            
+            if len(zu_streichen) != 0:
+                for k in xrange(len(zu_streichen)):
+                    if isinstance(zu_streichen[k], list):
+                        zu_streichen[k] = zu_streichen[k][0]
+                        
+            for x in xrange(3*m,3*(m+1)):
+                for y in xrange(3*n, 3*(n+1)):
+
+                    if len(sudoku[x][y]) > 1:
+
+                        for i in xrange(len(zu_streichen)):
+                            try:
+                                sudoku[x][y].remove(int(zu_streichen[i]))
+                            except:
+                                pass
+                            
+    return sudoku
+    
+def Spalten_streichen(sudoku):
+       
+    for x in xrange(9):
+        zu_streichen = []            
+        for y in xrange(9):
+        
+            if len(sudoku[y][x]) == 1:
+                zu_streichen.append(sudoku[y][x])
+                
+        for k in xrange(len(zu_streichen)):
+                if isinstance(zu_streichen[k], list):
+                    zu_streichen[k] = zu_streichen[k][0]
+                            
+        #print len(zu_streichen), zu_streichen        
+        for y in xrange(9):
+
+                if len(sudoku[y][x]) > 1:
+
+                    for i in xrange(len(zu_streichen)):
+                        try:
+                            sudoku[y][x].remove(int(zu_streichen[i]))
+                        except:
+                            pass
+                            
+    return sudoku
+
+#uebereben wird das suduku als liste. jede zeile ist ein listeneintrag. jeder wert in der zeile ist ein listeneintrag. (geschachtelte liste, 9*9)
+def Zeilen_streichen(sudoku):
+       
+    for x in xrange(9):
+        zu_streichen = []            
+        for y in xrange(9):
+        
+            if len(sudoku[x][y]) == 1:
+                zu_streichen.append(sudoku[x][y])
+         
+        for k in xrange(len(zu_streichen)):
+                if isinstance(zu_streichen[k], list):
+                    zu_streichen[k] = zu_streichen[k][0]
+                           
+        #print len(zu_streichen), zu_streichen        
+        for y in xrange(9):
+        
+                if len(sudoku[x][y]) > 1:
+
+                    for i in xrange(len(zu_streichen)):
+                        try:
+                            sudoku[x][y].remove(int(zu_streichen[i]))
+                        except:
+                            pass
+                            
+    return sudoku
+
+sudoku_angabe = '475090208006403070090050004301009640609010087054386000000100402047932006160000090'
+#sudoku_angabe = '070102060490000018000000000800040009000801000700030004000000000930000027010603080'
+#sudoku_angabe = '009060800000701000300000007030105060700000003050802010200000001000503000005090600'
+#sudoku_angabe = '009060800000701000300000007030105060700000003050802010200000001000503000005090600'
+
+sudoku_0 = Read_sudoku(sudoku_angabe)
+sudoku_1 = []#[[[0 for x in xrange(9)]for y in xrange(9)]for z in xrange(9)]
+    
+#Sudoku loesen
+while sudoku_0 != sudoku_1:
+    # deepcopy erzeugt eine echte kopie des objekts. "=" erzeugt eine kopie mit referenzen (ACHTUNG!!!)
+    sudoku_1 = copy.deepcopy(sudoku_0)
+        
+    sudoku_0 = Zeilen_streichen(sudoku_0)
+
+    sudoku_0 = Spalten_streichen(sudoku_0)
+
+    sudoku_0 = Block_streichen(sudoku_0)
+
+
+if Print_sudoku(sudoku_0) == 1:
+
+    for i in xrange(9):
+        print sudoku_0[i]
+

@@ -1,0 +1,10 @@
+import numpy as np
+import matplotlib as plt
+
+f = open("/home/alexander/Schreibtisch/tab.dat","r")
+
+ft = np.fft(f)
+
+plt.plot(ft)
+plt.grid()
+plt.show

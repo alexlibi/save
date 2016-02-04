@@ -1,0 +1,181 @@
+"""Usage: play.py -t # [-h]
+            -s sin|ramp|noise play either a sinus or a ramp or noise
+            -t # Time in seconds to be played (default: 5)
+            -f # Frequency in Hz (default: 440)
+            -d # Frequency range for ramp (default: 8000)
+            -a # Amplitude (default: 30000)
+            -h: Print this help message
+  RESULT:
+   Play a sound t seconds at your default sound card.
+   With a sample rate of 22050 Hz in format S16LE (16 bit int little endian)  
+"""
+import sys, getopt, pyaudio, math, random, threading,numpy as np,matplotlib.pyplot as plt,time
+from numpy.lib.financial import rate
+
+class play(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self):
+        opt=getopt.getopt(sys.argv[1:], "s:f:d:t:a:h")
+        rate = 22050
+        sound = 'sin'
+        freq = 1000.
+        df = 8000.
+        tr = 5.
+        ampl = 30000
+        for o in opt[0]:
+            if o[0]=='-t': tr=float(o[1])
+            if o[0]=='-s': sound=o[1]
+            if o[0]=='-f': freq=float(o[1])
+            if o[0]=='-d': df=float(o[1])
+            if o[0]=='-a': ampl=float(o[1])
+            if o[0]=='-h': print (__doc__); sys.exit(0)
+    
+        type_d={"sin": {"func": make_sin, "args":{"f0":freq,"ampl":ampl,"rate":22050,"length":tr}},
+            "ramp": {"func": make_ramp,"args":{"f0":freq,"df":df,"ampl":ampl,"rate":22050,"length":tr}},
+            "noise": {"func": make_noise,"args":{"ampl":ampl,"rate":22050,"length":tr}},
+            "square":{"func": make_square,"args":{"f0":freq, "ampl":ampl, "rate":22050, "length":tr}},
+            "triangle":{"func": make_triangle,"args":{"f0":freq, "ampl":ampl, "rate":22050, "length":tr}},
+            }
+    
+        wave=type_d[sound]["func"](**type_d[sound]["args"])
+    
+        PyAudio = pyaudio.PyAudio
+        p = PyAudio()
+        stream = p.open(format = p.get_format_from_width(2), 
+                    channels = 1, 
+                    rate = rate, 
+                    output = True)
+        stream.write(wave)
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+        
+class record(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self):
+        opt=getopt.getopt(sys.argv[1:], "t:o:h")
+        RATE = 22050
+        out_filename='record16'
+        RECORD_SECONDS = 5.
+        FORMATE = pyaudio.paInt16
+        CHUNK_SIZE = 1024
+      
+        for o in opt[0]:
+            if o[0]=='-t': RECORD_SECONDS=float(o[1])
+            if o[0]=='-o': out_filename=o[1]
+            if o[0]=='-h': print(__doc__); sys.exit(0)
+
+        p = pyaudio.PyAudio()
+        stream = p.open(format=FORMATE, channels=1, rate=RATE, input=True, output=True, frames_per_buffer=CHUNK_SIZE)
+
+        f = open(out_filename, 'w')
+
+        data = ''
+        for i in range(int(RATE / CHUNK_SIZE * RECORD_SECONDS)):
+            data += str(stream.read(CHUNK_SIZE))
+    
+        
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+        f.write(data)
+        f.close()
+        return data
+    
+class analysis(threading.Thread):
+    def __init__(self,data):
+        threading.Thread.__init__(self)
+        self.data=data
+    def run(self):
+        rate = 22050
+        data=self.data.strip().split()
+        print(data)
+        tmp=[]
+        for i in data:
+            tmp.append(float(i))
+        data=tmp
+        ffdata=np.fft.fft(data)
+        #print(ffdata)
+        
+        f=[]
+        for i in range(1,len(ffdata)):
+            f.append(i/rate)
+        
+        spec=np.square(np.absolute(ffdata[1:]))
+        plt.plot(f,ffdata.real,f,ffdata.imag)
+        plt.plot(f,spec)
+        plt.show()
+    
+
+
+def make_ramp(f0=30., df=2000., ampl=30000., rate=22050, length=5.):
+    n = int(rate * length)
+    wav = ''
+    #wprev = 0
+    for t in range(0, n):
+        w = 2 * math.pi * (df / (rate * length) * t + f0) / rate
+        #assert w >= wprev
+        #wprev = w
+        #print(w) # /(2 * math.pi)*rate
+        f = int(ampl * math.sin(w * t))
+        #assert f >= -32767 and f <= 32767
+        wav += chr(f & 0x00FF) + chr((f & 0xFF00) >> 8)
+    return wav
+# -------------------------------------
+def make_sin(f0=1000.,ampl=30000,rate=22050,length=5.):
+    w = 2. * math.pi * f0 / rate        
+    n = int(rate * length)
+    wav=''
+    for i in range(0, n):
+        f = int(ampl*math.sin(w*i))
+        wav += chr(f & 0x00FF) + chr((f & 0xFF00) >> 8) #auf 8 bit erweitern
+    return wav
+
+#------------------------------------------
+def make_noise(ampl=30000,rate=22050,length=5.):
+    wav = ''
+    n=int(rate*length)
+    for i in range(0,n):
+        f = int(ampl * random.uniform(-1,1))
+        wav += chr(f & 0x00FF) + chr((f & 0xFF00) >> 8)
+    return wav
+
+def make_square(f0=1000,ampl=30000,rate=22050,length=5.):
+    n=int(rate*length)
+    tmp=round(rate/f0)
+    wav=''
+    for i in range(0,n):
+        if i%tmp<tmp/2:
+            f=ampl
+        else:
+            f=-ampl
+        print(f)
+        wav+=chr(f&0x00FF)+chr((f&0x00FF)>>8)
+    return wav
+
+def make_triangle(f0=1000,ampl=30000, rate=22050, length=5.):
+    n = int(length * rate)
+    tmp=round(rate/f0)
+    wav=''
+    for i in range(0,n):
+        if i%tmp<tmp/2:
+            f=int(ampl*(1-4*(i%tmp)/tmp))
+        else:
+            f=int(ampl*(-1+4*((i%tmp)-tmp/2)/tmp))
+        print(f)
+        wav+=chr(f&0x00FF)+chr((f&0x00FF)>>8)
+    return wav
+
+#------------------------------------------
+
+if __name__ == '__main__':
+    p=play()
+    p.run()
+    r=record()
+    data=r.run()
+    while threading.activeCount()>1:
+        time.sleep(0.1)
+    a=analysis(data)
+    a.run()

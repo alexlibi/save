@@ -1,0 +1,33 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/alexander/save/.metadata/.plugins/org.eclipse.core.resources/.projects/laplace/com.python.pydev.analysis/v2_indexcache
+plot_test|1453142784000000000|/home/alexander/save/laplace/plot_test.py
+main|1453285591000000000|/home/alexander/save/laplace/main.py
+-- END DISKCACHE
+-- START DICTIONARY
+2
+1=plot_test
+2=main
+-- END DICTIONARY
+-- START TREE 1
+16
+a|2|a!11@a!19@
+b|1|b!11@
+cnt|1|cnt!19@
+dat|3|data_orig!19@data_float!19@data!19@
+f|1|f!19@
+fig|5|fig2!19@fig2!11@fig1!19@fig3!19@fig1!11@
+r|1|r!19@
+res|1|res!19@
+sum|2|SUM2!19@SUM1!19@
+tem|1|temp!19@
+tmp|1|tmp!19@
+vx|1|vx!19@
+vxn|1|vxn!19@
+vy|1|vy!19@
+vyn|1|vyn!19@
+w|1|w!19@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

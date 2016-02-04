@@ -1,0 +1,42 @@
+'''
+Created on 17. Jän. 2016
+
+@author: alexander
+'''
+
+import copy
+
+if __name__ == '__main__':
+    
+    f=open('laplace_daten/dach_ko60x60.dat','r')
+    
+    data=f.read().strip().split('\n')
+   
+    for i in range(len(data)):
+        data[i]=data[i].strip().split()
+
+    for n in range(100):
+        for i in range(1,len(data)):
+            for j in range(1,len(data[i])):
+                if str(data[i][j])[0]=="*":
+                    pass          
+                else:
+                    temp=[]
+                                        
+                    if str(data[i-1][j])[0]=='*': temp.append(float(data[i-1][j][1:]))
+                    else:temp.append(float(data[i-1][j]))
+                                        
+                    if str(data[i][j-1])[0]=='*': temp.append(float(data[i][j-1][1:]))
+                    else: temp.append(float(data[i][j-1]))
+                        
+                    if str(data[i+1][j])[0]=='*': temp.append(float(data[i+1][j][1:]))
+                    else: temp.append(float(data[i+1][j]))
+                        
+                    if str(data[i][j+1])[0]=='*': temp.append(float(data[i][j+1][1:]))
+                    else: temp.append(float(data[i][j+1]))
+                        
+                    data[i][j]=0.25*(sum(temp))
+            
+    for i in range(len(data)):
+        print(data[i])
+    

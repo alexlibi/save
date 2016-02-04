@@ -1,0 +1,21 @@
+#unsere fourier.py
+
+import math
+import numpy
+import sys
+
+
+name=sys.argv[1]
+
+datei=open(name, "r")
+a=datei.read()
+datei.close()
+#print a
+test=[]
+for i in a.strip().split():
+	test.append(int(i))
+erg=numpy.fft.fft(test)
+datei=open("fft.txt", "w")
+datei.write(erg)
+datei.close()
+#print test

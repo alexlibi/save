@@ -1,0 +1,24 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/alexander/save/.metadata/.plugins/org.eclipse.core.resources/.projects/test_for_linking/com.python.pydev.analysis/v2_indexcache
+sub|1450181035000000000|/home/alexander/save/test_for_linking/sub.py
+mult_div|1450181082000000000|/home/alexander/save/test_for_linking/mult_div.py
+add|1450180999000000000|/home/alexander/save/test_for_linking/add.py
+main|1450182067000000000|/home/alexander/save/test_for_linking/main.py
+-- END DISKCACHE
+-- START DICTIONARY
+3
+3=sub
+2=mult_div
+1=add
+-- END DICTIONARY
+-- START TREE 1
+4
+add|1|add!10@
+div|1|div!18@
+mul|1|mult!18@
+sub|1|sub!26@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

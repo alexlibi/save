@@ -1,0 +1,21 @@
+'''
+Created on 17. Jän. 2016
+
+@author: alexander
+'''
+
+if __name__ == '__main__':
+    
+    f=open('laplace_daten/dach_ko60x60.dat','r')
+    data=f.read().split('\n')
+   
+    for i in range(len(data)):
+        data[i]=data[i].split()
+
+    for i in range(len(data)):
+        for j in range(len(data(i))):
+            if i[0]="*":
+                pass
+            else:
+                data[i][j]=0.25*(data[i-1][j]+data[i][j-1]+data[i+1][j]+data[i][j+1])
+                       

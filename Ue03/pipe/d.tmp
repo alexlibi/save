@@ -1,0 +1,11 @@
+Fri Nov  9 09:28:16 CET 2007
+total 24
+drwxr-xr-x 2 dvph00 dvph 4096 2007-11-09 09:27 .
+drwxr-xr-x 6 dvph00 dvph 4096 2007-11-09 09:18 ..
+-rw-r--r-- 1 dvph00 dvph    0 2007-11-09 09:24 a.tmp
+-rw-r--r-- 1 dvph00 dvph    0 2007-11-09 09:24 b.tmp
+-rw-r--r-- 1 dvph00 dvph    0 2007-11-09 09:24 c.tmp
+-rw-r--r-- 1 dvph00 dvph   29 2007-11-09 09:28 d.tmp
+-rw-r--r-- 1 dvph00 dvph  107 2007-11-08 14:46 pipe1.py
+-rw-r--r-- 1 dvph00 dvph  233 2007-11-08 15:10 pipe2.py
+-rw-r--r-- 1 dvph00 dvph  232 2007-11-08 15:10 pipe2.py~

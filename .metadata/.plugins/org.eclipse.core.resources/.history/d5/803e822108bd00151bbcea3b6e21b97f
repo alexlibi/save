@@ -1,0 +1,14 @@
+'''
+Created on 17. Jän. 2016
+
+@author: alexander
+'''
+
+if __name__ == '__main__':
+    f=open('laplace_daten/dach_ko60x60.dat','r')
+    data=[]
+    data2=f.read()
+    for i in range(10):
+        data[i]=f.readline().split()
+    print(data)
+        
